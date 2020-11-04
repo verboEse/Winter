@@ -19,6 +19,12 @@ You are welcome to read the **[Winter Wikipedia](https://github.com/kangarko/Win
 
 Check out https://www.spigotmc.org/resources/49646 for more information.
 
+# Compiling
+
+1. Obtain Foundation from github.com/kangarko/Foundation
+2. Create library/ folder in Winter/ and obtain binaries described in pom.xml. You have to obtain them yourself.
+3. Compile Foundation and Winter using Maven with the "clean install" goal.
+
 <hr>
 
 Dave Thomas, founder of OTI, godfather of the Eclipse strategy:
