@@ -1,22 +1,22 @@
 package org.mineacademy.winter.psycho;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.winter.settings.Settings;
 
-import net.minecraft.server.v1_16_R2.EntityHuman;
-import net.minecraft.server.v1_16_R2.EntityLiving;
-import net.minecraft.server.v1_16_R2.EntitySnowball;
-import net.minecraft.server.v1_16_R2.EntitySnowman;
-import net.minecraft.server.v1_16_R2.EntityTypes;
-import net.minecraft.server.v1_16_R2.MathHelper;
-import net.minecraft.server.v1_16_R2.PathfinderGoalMeleeAttack;
-import net.minecraft.server.v1_16_R2.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.server.v1_16_R2.SoundEffect;
-import net.minecraft.server.v1_16_R2.SoundEffects;
+import net.minecraft.server.v1_16_R3.EntityHuman;
+import net.minecraft.server.v1_16_R3.EntityLiving;
+import net.minecraft.server.v1_16_R3.EntitySnowball;
+import net.minecraft.server.v1_16_R3.EntitySnowman;
+import net.minecraft.server.v1_16_R3.EntityTypes;
+import net.minecraft.server.v1_16_R3.MathHelper;
+import net.minecraft.server.v1_16_R3.PathfinderGoalMeleeAttack;
+import net.minecraft.server.v1_16_R3.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.server.v1_16_R3.SoundEffect;
+import net.minecraft.server.v1_16_R3.SoundEffects;
 
 public class PsychoMob1_16 extends EntitySnowman {
 

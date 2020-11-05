@@ -18,7 +18,7 @@ public class PsychoMob implements Listener {
 	public static final boolean IS_COMPATIBLE;
 
 	static {
-		IS_COMPATIBLE = MinecraftVersion.equals(COMP_VERSION) && MinecraftVersion.getServerVersion().endsWith("R2");
+		IS_COMPATIBLE = MinecraftVersion.equals(COMP_VERSION) && MinecraftVersion.getServerVersion().endsWith("R3");
 	}
 
 	public static final void spawn(Location loc) {

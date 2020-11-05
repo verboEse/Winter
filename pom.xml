@@ -21,7 +21,7 @@
 			<artifactId>Paper</artifactId>
 			<version>Paper-1.16.3-SNAPSHOT-193</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/library/Paper-1.16.3-SNAPSHOT-193.jar</systemPath>
+			<systemPath>${basedir}/library/Paper-1.16.4-SNAPSHOT-261.jar</systemPath>
 		</dependency>
 		
 		<dependency>
