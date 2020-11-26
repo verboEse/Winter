@@ -5,7 +5,7 @@
 
 	<groupId>org.mineacademy</groupId>
 	<artifactId>Winter</artifactId>
-	<version>2.4.9</version>
+	<version>2.5.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -21,14 +21,14 @@
 			<artifactId>Paper</artifactId>
 			<version>Paper-1.16.3-SNAPSHOT-193</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/library/Paper-1.16.4-SNAPSHOT-261.jar</systemPath>
+			<systemPath>${basedir}/library/Paper-1.16.4-SNAPSHOT-288.jar</systemPath>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.mineacademy</groupId>
 			<artifactId>Foundation</artifactId>
 			<version>LATEST</version>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<build>
