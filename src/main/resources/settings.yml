@@ -98,11 +98,6 @@ Weather:
   # Make the Snow particles (see below) float chaotically during rain or thunderstorm?
   #
   Snow_Storm: true
-  #
-  # How like it is to start a thunderstorm instead of raining? (Darker sky + lightnings)
-  # From 0 to 100 in percent.
-  #
-  Thunderstorm_Chance: 30
 
 # -------------------------------------------------------------------------------------------
 # Winter makes your terrain freeze, and can even make your map look like it's winter

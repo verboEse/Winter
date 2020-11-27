@@ -3,6 +3,9 @@ package org.mineacademy.winter;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion;
 import org.mineacademy.fo.MinecraftVersion.V;
@@ -18,12 +21,12 @@ import org.mineacademy.winter.listener.SnowmanDamageListener;
 import org.mineacademy.winter.listener.SnowmanDealDamageListener;
 import org.mineacademy.winter.listener.SnowmanTargetListener;
 import org.mineacademy.winter.listener.SnowmanTransformListener;
-import org.mineacademy.winter.listener.WeatherListener;
 import org.mineacademy.winter.listener.WinterListener;
 import org.mineacademy.winter.model.data.ChestData;
 import org.mineacademy.winter.model.data.PlayerData;
 import org.mineacademy.winter.model.task.TaskParticleSnow;
 import org.mineacademy.winter.model.task.TaskTerrain;
+import org.mineacademy.winter.model.task.TaskWeather;
 import org.mineacademy.winter.psycho.PsychoMob;
 import org.mineacademy.winter.settings.Localization;
 import org.mineacademy.winter.settings.Settings;
@@ -46,8 +49,7 @@ public class Winter extends SimplePlugin {
 		return new String[] {
 				"&f_ _ _ _ _  _ ___ ____ ____ ",
 				"&f| | | | |\\ |  |  |___ |__/ ",
-				"&f|_|_| | | \\|  |  |___ |  \\ ",
-				" ",
+				"&7|_|_| | | \\|  |  |___ |  \\ ",
 		};
 	}
 
@@ -60,8 +62,6 @@ public class Winter extends SimplePlugin {
 		registerEventsIf(new PsychoMob(), PsychoMob.IS_COMPATIBLE);
 
 		Common.log(
-				" ",
-				"WELCOME TO " + getName().toUpperCase() + " " + getVersion(),
 				" ",
 				"&fIssues Tracker:",
 				"&6https://github.com/kangarko/Winter/issues",
@@ -91,9 +91,6 @@ public class Winter extends SimplePlugin {
 		if (Settings.Snowman.Damage.SNOWBALL > 0)
 			registerEvents(new SnowmanDealDamageListener());
 
-		if (Settings.Weather.DISABLE || Settings.Weather.SNOW_STORM)
-			registerEvents(new WeatherListener());
-
 		if (!Settings.Terrain.PREVENT_MELTING.isEmpty())
 			registerEvents(new MeltingListener());
 
@@ -113,6 +110,22 @@ public class Winter extends SimplePlugin {
 
 		if (Settings.Terrain.SnowGeneration.ENABLED)
 			Common.runTimer(20, Settings.Terrain.SnowGeneration.PERIOD, new TaskTerrain());
+
+		if (Settings.Weather.DISABLE || Settings.Weather.SNOW_STORM)
+			Common.runTimer(20, 20 * 10, new TaskWeather());
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onWeatherChange(WeatherChangeEvent event) {
+		if (!event.toWeatherState())
+			return;
+
+		if (Settings.Weather.DISABLE && Settings.ALLOWED_WORLDS.contains(event.getWorld().getName())) {
+			event.setCancelled(true);
+
+			event.getWorld().setWeatherDuration(0);
+			event.getWorld().setThundering(false);
+		}
 	}
 
 	@Override

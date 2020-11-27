@@ -94,14 +94,12 @@ public final class Settings extends SimpleSettings {
 
 		public static Boolean DISABLE;
 		public static Boolean SNOW_STORM;
-		public static Integer THUNDER_CHANCE;
 
 		private static void init() {
 			pathPrefix("Weather");
 
 			DISABLE = getBoolean("Disable");
 			SNOW_STORM = getBoolean("Snow_Storm");
-			THUNDER_CHANCE = getInteger("Thunderstorm_Chance");
 		}
 	}
 

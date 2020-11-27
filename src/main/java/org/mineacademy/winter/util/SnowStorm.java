@@ -1,19 +1,20 @@
 package org.mineacademy.winter.util;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.World;
-import org.mineacademy.fo.collection.StrictList;
 
 public class SnowStorm {
 
-	private static final StrictList<String> worlds = new StrictList<>();
+	private static final Set<String> worlds = new HashSet<>();
 
 	public static final void add(World world) {
-		if (!has(world))
-			worlds.add(world.getName());
+		worlds.add(world.getName());
 	}
 
 	public static final void remove(World world) {
-		worlds.removeWeak(world.getName());
+		worlds.remove(world.getName());
 	}
 
 	public static final boolean has(World world) {
