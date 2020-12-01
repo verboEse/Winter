@@ -19,6 +19,7 @@ import org.mineacademy.fo.model.ConfigSerializable;
 import org.mineacademy.fo.settings.YamlSectionConfig;
 import org.mineacademy.winter.model.chest.DatedChest;
 import org.mineacademy.winter.model.chest.WinterChest;
+import org.mineacademy.winter.settings.Settings;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -100,7 +101,7 @@ public class PlayerData extends YamlSectionConfig {
 		}
 
 		public boolean isPreview(WinterChest chest) {
-			return chest instanceof DatedChest && usedCount == 1;
+			return chest instanceof DatedChest && Settings.DatedChest.PREVIEW && usedCount == 1;
 		}
 
 		@Override

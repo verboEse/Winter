@@ -50,6 +50,7 @@ public class Winter extends SimplePlugin {
 				"&f_ _ _ _ _  _ ___ ____ ____ ",
 				"&f| | | | |\\ |  |  |___ |__/ ",
 				"&7|_|_| | | \\|  |  |___ |  \\ ",
+				" ",
 		};
 	}
 
@@ -62,11 +63,9 @@ public class Winter extends SimplePlugin {
 		registerEventsIf(new PsychoMob(), PsychoMob.IS_COMPATIBLE);
 
 		Common.log(
-				" ",
-				"&fIssues Tracker:",
+				"&fGet Support:",
 				"&6https://github.com/kangarko/Winter/issues",
-				" ",
-				Common.consoleLine());
+				Common.consoleLineSmooth());
 	}
 
 	@Override

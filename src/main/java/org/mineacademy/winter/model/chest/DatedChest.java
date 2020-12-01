@@ -64,8 +64,10 @@ public final class DatedChest extends InfiniteChest {
 		final String hMin = hMinL / 60 + ":" + hMinL % 60;
 		final String hMax = hMaxL / 60 + ":" + hMaxL % 60;
 
+		final boolean sameDay = minD.getYear() == maxD.getYear() && minD.getMonth() == maxD.getMonth() && minD.getDay() == maxD.getDay();
+
 		return Localization.Chest.DATED_NOT_READY.replace("{accessibility}",
-				((day.isStatic() ? "{on} " + min : "{between} " + min + " {and} " + max) + (hour != null ? hour.isStatic() ? " {between} " + hMin + " {and} " + hMax : " {at} " + hMin : ""))
+				((sameDay ? "{on} " + min : "{between} " + min + " {and} " + max) + (hour != null ? hour.isStatic() ? " {between} " + hMin + " {and} " + hMax : " {at} " + hMin : ""))
 						.replace("{on}", Localization.Parts.ON)
 						.replace("{between}", Localization.Parts.BETWEEN)
 						.replace("{and}", Localization.Parts.AND)

@@ -3,6 +3,7 @@ package org.mineacademy.winter.settings;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.bukkit.block.Biome;
@@ -26,6 +27,19 @@ public final class Settings extends SimpleSettings {
 	@Override
 	protected int getConfigVersion() {
 		return 1;
+	}
+
+	/**
+	 * @see org.mineacademy.fo.settings.YamlStaticConfig#saveComments()
+	 */
+	@Override
+	protected boolean saveComments() {
+		return true;
+	}
+
+	@Override
+	protected List<String> getUncommentedSections() {
+		return Arrays.asList("Terrain.Snow_Generation.Freeze_Ignore");
 	}
 
 	public static final class GiftChest {
@@ -75,18 +89,20 @@ public final class Settings extends SimpleSettings {
 
 	public static final class DatedChest {
 
+		public static Boolean PREVIEW;
 		public static Integer DEFAULT_YEAR;
 
 		private static void init() {
 			pathPrefix("Dated_Chest");
 
+			PREVIEW = getBoolean("Preview");
 			DEFAULT_YEAR = getInteger("Default_Year");
 
 			if (DEFAULT_YEAR != new GregorianCalendar().get(Calendar.YEAR))
 				Common.logFramed(false,
 						"Warning: Your Dated_Chest.Default_Year is " + DEFAULT_YEAR + ".",
 						"You do not need to update it if your chests are overlapping",
-						"from for example 2019 to 2020 (then leave at 2019).");
+						"from for example 2020 to 2021 (then leave at 2020).");
 		}
 	}
 

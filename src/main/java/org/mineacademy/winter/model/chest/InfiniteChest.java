@@ -55,6 +55,7 @@ public abstract class InfiniteChest implements WinterChest {
 			Localization.Boxed.CHEST_OPEN.tell(player);
 			CompSound.LEVEL_UP.play(player, 1, 1);
 		}
+
 		return true;
 	}
 

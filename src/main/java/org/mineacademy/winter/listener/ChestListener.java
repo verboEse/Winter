@@ -22,6 +22,7 @@ import java.util.Arrays;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
@@ -56,6 +57,8 @@ import org.mineacademy.winter.util.Permissions;
 import org.mineacademy.winter.util.WinterUtil;
 
 public class ChestListener implements Listener {
+
+	private final static BlockFace[] BLOCK_FACES = new BlockFace[] { BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH };
 
 	private final StrictMap<String, ChestMatcher> validChests = new StrictMap<>();
 
@@ -168,57 +171,89 @@ public class ChestListener implements Listener {
 	 * OPENING WINTER CHESTS
 	 */
 	@EventHandler(ignoreCancelled = true)
-	public void onChestOpen(PlayerInteractEvent e) {
-		final Block b = e.getClickedBlock();
-
-		if (e.getAction() != Action.RIGHT_CLICK_BLOCK | !(b.getState() instanceof Chest))
+	public void onChestOpen(PlayerInteractEvent event) {
+		if (event.getAction() != Action.RIGHT_CLICK_BLOCK)
 			return;
 
-		final WinterChest chest = GiftSignUtil.findChestFull((Chest) b.getState());
+		final Block block = event.getClickedBlock();
+		final BlockState blockState = block.getState();
+
+		if (blockState instanceof Chest)
+			handleChestOpen((Chest) blockState, event);
+
+		else if (blockState instanceof Sign)
+			for (final BlockFace face : BLOCK_FACES) {
+				final BlockState relativeState = block.getRelative(face).getState();
+
+				if (relativeState instanceof Chest) {
+					final boolean opened = handleChestOpen((Chest) relativeState, event);
+
+					if (opened)
+						break;
+				}
+			}
+	}
+
+	private boolean handleChestOpen(Chest chestState, PlayerInteractEvent event) {
+		final WinterChest chest = GiftSignUtil.findChestFull(chestState);
 
 		if (chest == null)
-			return;
+			return false;
 
-		final Player pl = e.getPlayer();
+		final Player player = event.getPlayer();
 
 		try {
-			if (chest.isOwner(pl)) {
-				Common.tell(pl, OPEN_OWN);
+			if (chest.isOwner(player)) {
+				Common.tell(player, OPEN_OWN);
 
-				return;
+				player.openInventory(chestState.getInventory());
+				return false;
 			}
 		} catch (final Throwable t) {
-			return;
+			return false;
 		}
 
-		if (pl.isSneaking()) {
-			Common.tell(pl, ILLEGAL_PLACE);
+		if (player.isSneaking()) {
+			Common.tell(player, ILLEGAL_PLACE);
 
-			e.setCancelled(true);
-			return;
+			event.setCancelled(true);
+			return false;
 		}
 
 		if (chest instanceof GiftChest) {
 			final GiftChest gift = (GiftChest) chest;
 
-			if (gift.isPublicChest())
-				Common.tell(pl, OPEN_PUBLIC);
-			else if (!gift.canAccess(pl)) {
-				if (PlayerUtil.hasPerm(pl, Permissions.Chest.ADMIN))
-					Common.tell(pl, OPEN_ADMIN);
-				else {
-					Common.tell(pl, ILLEGAL_ACCESS);
+			if (gift.isPublicChest()) {
+				Common.tell(player, OPEN_PUBLIC);
 
-					e.setCancelled(true);
+				player.openInventory(chestState.getInventory());
+
+			} else if (!gift.canAccess(player)) {
+				if (PlayerUtil.hasPerm(player, Permissions.Chest.ADMIN)) {
+					Common.tell(player, OPEN_ADMIN);
+
+					player.openInventory(chestState.getInventory());
+
+				} else {
+					Common.tell(player, ILLEGAL_ACCESS);
+
+					event.setCancelled(true);
 				}
-			} else
-				Common.tell(pl, OPEN_PRIVATE);
+
+			} else {
+				Common.tell(player, OPEN_PRIVATE);
+
+				player.openInventory(chestState.getInventory());
+			}
+
 		} else if (chest instanceof InfiniteChest) {
 			final InfiniteChest inf = (InfiniteChest) chest;
 
-			inf.onTryOpen(pl);
-			e.setCancelled(true);
+			event.setCancelled(true);
+			return inf.onTryOpen(player);
 		}
+
+		return false;
 	}
 
 	/**
